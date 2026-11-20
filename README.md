@@ -1,43 +1,43 @@
-# Biomedical NLP — Multi-label MeSH Classification
+# Biomedical NLP — Многометочная классификация MeSH
 
-An academic NLP study of **multi-label classification of cardiology publications** from PubMed into **50 MeSH categories**. The workflow covers PubMed/Entrez XML collection, annotation provenance checks, preprocessing and phrase detection, domain-specific Word2Vec training, neural architectures, hyperparameter selection and model comparison.
+Учебно-исследовательский проект по **многометочной классификации научных публикаций в области кардиологии** из PubMed по **50 категориям MeSH**. Работа охватывает сбор данных через PubMed/Entrez XML, проверку происхождения разметки, предобработку текстов и выделение устойчивых словосочетаний, обучение специализированных Word2Vec-эмбеддингов, разработку нейросетевых архитектур, подбор гиперпараметров и сравнительный анализ моделей.
 
-## Results
+## Результаты
 
-| Model | Test micro-F1 | Test macro-F1 |
+| Модель | Test micro-F1 | Test macro-F1 |
 | --- | ---: | ---: |
 | **Word2Vec + BiGRU + Attention (tuned)** | **0.8072** | **0.7753** |
 | BiGRU + Attention (untuned) | 0.8049 | 0.7738 |
 | TF-IDF + Logistic Regression (tuned) | 0.7873 | 0.7536 |
 | TextCNN (tuned) | 0.7861 | 0.7517 |
 
-The notebook documents the data split, validation-based model selection, analysis by MeSH label and error cases. The figures above are results recorded in the original notebook, not a fresh reproduction during publication.
+В ноутбуке задокументированы разделение данных на выборки, выбор модели на основе validation, анализ качества по отдельным меткам MeSH и разбор ошибок классификации.
 
-## Methods
+## Методология
 
-- Source: PubMed XML using Biopython Entrez; separate manually indexed publications from automatically indexed records for supervised evaluation.
-- Features: Gensim Word2Vec (CBOW and Skip-gram), medical phrase detection and TF-IDF baselines.
-- Models: Logistic Regression, MLP, TextCNN and BiGRU + Attention in PyTorch.
-- Evaluation: iterative multilabel stratification, validation-tuned decision thresholds, micro/macro-F1 and error analysis.
-- Optimization: Optuna, early stopping and checkpoint selection.
+- **Источник данных:** получение PubMed XML через Biopython Entrez; разделение публикаций с ручной и автоматической индексацией для корректной оценки моделей в задаче supervised learning.
+- **Признаки:** Gensim Word2Vec (CBOW и Skip-gram), выделение устойчивых медицинских словосочетаний и baseline-модели на основе TF-IDF.
+- **Модели:** Logistic Regression, MLP, TextCNN и BiGRU + Attention с использованием PyTorch.
+- **Оценка качества:** iterative multilabel stratification, подбор порогов классификации на validation, метрики micro/macro-F1 и анализ ошибок.
+- **Оптимизация:** Optuna, early stopping и выбор оптимальных checkpoints.
 
-## Run
+## Запуск
 
-1. Install Python and the dependencies in `requirements.txt` (a compatible GPU environment is recommended for neural models).
-2. Set `COURSE_BASE_DIR` to a writable directory. The original notebook otherwise falls back to an author-specific Windows drive path.
-3. Set `ENTREZ_EMAIL` to your own email address for NCBI Entrez; `ENTREZ_API_KEY` is optional.
-4. Open `biomedical-nlp.ipynb` in Jupyter and run the cells sequentially.
+1. Установите Python и зависимости из `requirements.txt`. Для обучения нейросетевых моделей рекомендуется среда с поддержкой GPU.
+2. Укажите в `COURSE_BASE_DIR` путь к директории с правами на запись. В противном случае исходный ноутбук использует путь по умолчанию, привязанный к локальному диску автора в Windows.
+3. Укажите собственный адрес электронной почты в `ENTREZ_EMAIL` для работы с NCBI Entrez. Параметр `ENTREZ_API_KEY` необязателен.
+4. Откройте `biomedical-nlp.ipynb` в Jupyter и последовательно выполните ячейки.
 
-The notebook downloads and processes a large corpus; expect significant storage, runtime and network requirements. **The PubMed corpus and checkpoints are not included in this repository.** The original executed notebook preserves the recorded results.
+Ноутбук загружает и обрабатывает большой корпус публикаций, поэтому выполнение требует значительного объёма дискового пространства, вычислительных ресурсов и сетевого трафика.
 
-## Source
+**Корпус PubMed и checkpoints моделей не включены в репозиторий.** Исходный ноутбук с сохранёнными результатами выполнения позволяет ознакомиться с полученными экспериментальными результатами.
+
+## Источники данных
 
 - [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
 - [NCBI E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/)
 
-## Repository contents
+## Структура репозитория
 
-- `biomedical-nlp.ipynb` — full experiment notebook, including preprocessing, EDA, training and results.
-- `requirements.txt` — main third-party Python dependencies (version-independent overview).
-
-Academic project; model results are dataset- and split-specific. No clinical claims are made.
+- `biomedical-nlp.ipynb` — основной экспериментальный ноутбук, включающий предобработку данных, EDA, обучение моделей и результаты экспериментов.
+- `requirements.txt` — основные сторонние зависимости Python (без фиксации конкретных версий).
