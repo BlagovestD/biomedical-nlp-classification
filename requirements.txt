@@ -1,0 +1,11 @@
+biopython
+gensim
+iterative-stratification
+matplotlib
+numpy
+optuna
+pandas
+scikit-learn
+scikit-multilearn
+seaborn
+torch
